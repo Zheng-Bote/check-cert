@@ -1,0 +1,14 @@
+# systemd user unit for SendMail
+#   cp docs/sendmail.service ~/.config/systemd/user/
+#   systemctl --user daemon-reload && systemctl --user enable --now sendmail
+[Unit]
+Description=SendMail - mail *.SendMail files from a watched directory
+After=network-online.target
+
+[Service]
+ExecStart=/opt/CheckCert/SendMail -c /opt/CheckCert/SendMail.env
+Restart=on-failure
+RestartSec=30
+
+[Install]
+WantedBy=default.target

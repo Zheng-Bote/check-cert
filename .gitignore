@@ -1,0 +1,6 @@
+build/**
+/CheckCert.env
+*.SendMail
+*.tmp
+/SendMail.env
+out/

@@ -1,0 +1,55 @@
+name: Build and Release Binary
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: stable
+
+      - name: Test
+        run: make test
+
+      - name: Build (amd64 + arm64)
+        run: |
+          make build
+          for b in CheckCert SendMail; do mv build/$b build/$b-linux-amd64; done
+          GOARCH=arm64 make build
+          for b in CheckCert SendMail; do mv build/$b build/$b-linux-arm64; done
+          cp docs/CheckCert.env docs/SendMail.env build/
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: CheckCert
+          path: |
+            build/*-linux-*
+            build/*.env
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        if: startsWith(github.ref, 'refs/tags/')
+        with:
+          files: |
+            build/*-linux-amd64
+            build/*-linux-arm64
+            build/CheckCert.env
+            build/SendMail.env
+          generate_release_notes: true

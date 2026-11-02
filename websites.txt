@@ -1,0 +1,6 @@
+# 0 6 * * * /run/media/zb_bamboo/home/zb_bamboo/DEV/__NEW__/Web-Sites/Check_Cert/check_cert.sh -l /run/media/zb_bamboo/home/zb_bamboo/DEV/__NEW__/Web-Sites/Check_Cert/websites.txt -o /path/to/maildir
+hase-zheng.net:443
+robert.hase-zheng.net:443
+bote.hase-zheng.net:443
+flag-me.info:443
+#digidocu.dev:443
