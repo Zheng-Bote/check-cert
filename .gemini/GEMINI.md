@@ -1,3 +1,6 @@
+<!-- sdd:agents -->
+Lies zuerst @../AGENTS.md — Verfassung, Präzedenz und Ablauf dieses Projekts (sdd).
+
 Make sure to always use Go (current stable release) and only the Go standard library
 
 Make sure to use SPDX Header in all go files, based on the internal/config/rz_config.go file
